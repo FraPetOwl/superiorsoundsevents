@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import QuoteDrawer from './components/QuoteDrawer';
 import ProductDetailModal from './components/ProductDetailModal';
+import ChatDrawer from './components/ChatDrawer';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -69,6 +70,9 @@ export default function App() {
 
         {/* Global Product Detail Modal */}
         <ProductDetailModal />
+
+        {/* Floating AI Equipment & Event Assistant Drawer */}
+        <ChatDrawer />
 
         {/* Footer */}
         <Footer setActivePage={handlePageChange} />

@@ -101,11 +101,24 @@ jobs:
 
 ---
 
-## 🤖 Future Chatbot Integration
+## 🤖 AI Equipment & Rental Assistant
 
-Per instructions, the site is designed to easily host your custom chatbot:
-1. When you're ready, simply add your chatbot script or component inside `src/App.jsx` right before the closing `</div>`.
-2. The `QuoteContext` state can be directly read by the chatbot if you want it to know what items are in the visitor's quote bag!
+The website includes an intelligent, responsive floating drawer assistant (`src/components/ChatDrawer.jsx` and `src/services/chatService.js`) integrated directly with the 47-product inventory and Quote Bag:
+
+### 1. Hybrid 3-Tier Architecture
+- **Tier 1 (Groq Cloud LLM - Recommended for Production & Dev)**:
+  - Connects to Groq (`llama-3.3-70b-versatile`) with ~300ms ultra-fast streaming and zero load on your PC.
+  - To activate: set `VITE_GROQ_API_KEY=gsk_...` in `.env.local` or Cloudflare Pages environment variables.
+- **Tier 2 (Local / VM FastAPI Backend)**:
+  - Connects to `your_local_chatbot` running on `localhost:8000/chat` (or your remote VM).
+  - Configurable via `VITE_CHATBOT_API_URL`.
+- **Tier 3 (Zero-Failure Client-Side Smart Matcher)**:
+  - If no API key is set and no backend is running, the chatbot uses fuzzy semantic and keyword matching across all 47 items in `inventory.js` plus policy maps (deliveries, warehouse pickup hours, etc.).
+  - Guarantees 100% uptime with zero server cost on Cloudflare Pages.
+
+### 2. Interactive Gear & Quote Sync
+- When the assistant recommends equipment (e.g. *Pioneer DJM-900NXS2*, *QSC KW122*, *Shure SLXD24D*), users get an inline **`+ Add to Quote`** button that drops the gear straight into their Quote Bag with live subtotal updates!
+- Users can also click **`Specs`** to open the full technical specification modal.
 
 ---
 
