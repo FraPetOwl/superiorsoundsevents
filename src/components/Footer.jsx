@@ -1,5 +1,6 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Clock, Calendar, ExternalLink, ShieldCheck, Heart } from 'lucide-react';
+import InstagramIcon from './icons/InstagramIcon';
 import { YELP_URL } from '../data/testimonials';
 
 export default function Footer({ setActivePage }) {
@@ -156,12 +157,23 @@ export default function Footer({ setActivePage }) {
               </a>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col space-y-2">
+              <a
+                href="https://www.instagram.com/superiorsounds"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg bg-pink-950/40 text-pink-300 border border-pink-800/50 hover:bg-pink-900/40 transition-colors w-fit"
+              >
+                <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
+                <span>Follow @superiorsounds</span>
+                <ExternalLink className="w-3 h-3 text-pink-400" />
+              </a>
+
               <a
                 href={YELP_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg bg-red-950/40 text-red-400 border border-red-800/50 hover:bg-red-900/40 transition-colors"
+                className="inline-flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg bg-red-950/40 text-red-400 border border-red-800/50 hover:bg-red-900/40 transition-colors w-fit"
               >
                 <span>Check us out on Yelp ★★★★★</span>
                 <ExternalLink className="w-3 h-3" />

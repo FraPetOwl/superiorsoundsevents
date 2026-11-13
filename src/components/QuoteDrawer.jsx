@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Trash2, Plus, Minus, Calendar, MapPin, Truck, Phone, Mail, CheckCircle2, ArrowRight, ShieldCheck, ShoppingBag } from 'lucide-react';
+import { X, Trash2, Plus, Minus, Calendar, MapPin, Truck, Phone, Mail, CheckCircle2, ArrowRight, ShieldCheck, ShoppingBag, Printer, FileDown } from 'lucide-react';
 import { useQuote } from '../context/QuoteContext';
+import { printQuote } from '../utils/printQuote';
 
 export default function QuoteDrawer() {
   const {
@@ -439,6 +440,15 @@ export default function QuoteDrawer() {
 
               {/* Fast-track confirmation actions */}
               <div className="pt-2 space-y-3">
+                <button
+                  type="button"
+                  onClick={() => printQuote({ items, startDate, endDate, rentalDays, fulfillment, subtotal, client: formData })}
+                  className="w-full inline-flex items-center justify-center space-x-2 py-3 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 font-bold text-sm border border-cyan-500/50 shadow-lg shadow-cyan-950/50 transition-all"
+                >
+                  <Printer className="w-4 h-4 text-cyan-400" />
+                  <span>Download / Print Official PDF Quote</span>
+                </button>
+
                 <p className="text-xs text-amber-300/90 font-medium">
                   Need immediate confirmation or custom event assistance?
                 </p>
@@ -492,13 +502,24 @@ export default function QuoteDrawer() {
             </div>
 
             {step === 'review' ? (
-              <button
-                onClick={() => setStep('details')}
-                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-black text-sm flex items-center justify-center space-x-2 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
-              >
-                <span>Continue to Event Details</span>
-                <ArrowRight className="w-4 h-4 stroke-[3]" />
-              </button>
+              <div className="flex space-x-2">
+                <button
+                  type="button"
+                  onClick={() => printQuote({ items, startDate, endDate, rentalDays, fulfillment, subtotal, client: formData })}
+                  className="px-3.5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 hover:border-cyan-500/40 text-xs font-bold flex items-center justify-center space-x-1.5 transition-all"
+                  title="Print or save as branded PDF"
+                >
+                  <Printer className="w-4 h-4 text-cyan-400" />
+                  <span className="hidden sm:inline">PDF Quote</span>
+                </button>
+                <button
+                  onClick={() => setStep('details')}
+                  className="flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-black text-sm flex items-center justify-center space-x-2 shadow-lg shadow-cyan-500/25 active:scale-95 transition-all"
+                >
+                  <span>Continue to Event Details</span>
+                  <ArrowRight className="w-4 h-4 stroke-[3]" />
+                </button>
+              </div>
             ) : (
               <div className="flex space-x-2">
                 <button

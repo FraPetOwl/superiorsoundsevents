@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, ShoppingBag, Menu, X, Calendar, Sparkles } from 'lucide-react';
+import InstagramIcon from './icons/InstagramIcon';
 import { useQuote } from '../context/QuoteContext';
 
 export default function Header({ activePage, setActivePage }) {
@@ -34,6 +35,15 @@ export default function Header({ activePage, setActivePage }) {
           </div>
           <div className="hidden md:flex items-center space-x-6 text-slate-300">
             <span>By Appointment: 91 College Ave, Poughkeepsie, NY</span>
+            <a
+              href="https://www.instagram.com/superiorsounds"
+              target="_blank"
+              rel="noreferrer"
+              className="text-pink-400 hover:text-pink-300 font-semibold flex items-center space-x-1"
+            >
+              <InstagramIcon className="w-3.5 h-3.5" />
+              <span>@superiorsounds</span>
+            </a>
             <a
               href="tel:8457905472"
               className="text-cyan-400 hover:text-cyan-300 font-semibold flex items-center space-x-1"

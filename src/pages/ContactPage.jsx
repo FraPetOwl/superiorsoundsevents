@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Calendar, ShieldCheck, CheckCircle2, ArrowRight, MessageSquare, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Calendar, ShieldCheck, CheckCircle2, ArrowRight, MessageSquare, Send, ExternalLink } from 'lucide-react';
+import InstagramIcon from '../components/icons/InstagramIcon';
 import { YELP_URL } from '../data/testimonials';
 
 export default function ContactPage() {
@@ -142,6 +143,26 @@ export default function ContactPage() {
                 <p className="text-[11px] text-slate-400 mt-0.5">By scheduled appointment</p>
               </div>
             </div>
+          </div>
+
+          {/* Yelp & Instagram Trust Cards */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-pink-950/30 via-slate-900 to-cyan-950/30 border border-slate-800 space-y-3">
+            <h4 className="text-sm font-bold text-white flex items-center space-x-2">
+              <InstagramIcon className="w-4 h-4 text-pink-400" />
+              <span>Follow @superiorsounds</span>
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Explore live event setups, behind-the-scenes concert sound checks, and dance floors across the Hudson Valley.
+            </p>
+            <a
+              href="https://www.instagram.com/superiorsounds"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center space-x-1.5 text-xs text-pink-400 hover:text-pink-300 font-semibold"
+            >
+              <span>Follow on Instagram (@superiorsounds)</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </div>
 
           {/* Yelp / Trust Card */}
