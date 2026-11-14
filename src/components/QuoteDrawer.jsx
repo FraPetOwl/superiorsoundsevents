@@ -41,6 +41,19 @@ export default function QuoteDrawer() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Postel's Law: forgiving and auto-formatting phone input
+  const handlePhoneChange = (e) => {
+    let raw = e.target.value.replace(/\D/g, '');
+    if (raw.length > 10) raw = raw.slice(0, 10);
+    let formatted = raw;
+    if (raw.length > 6) {
+      formatted = `(${raw.slice(0, 3)}) ${raw.slice(3, 6)}-${raw.slice(6)}`;
+    } else if (raw.length > 3) {
+      formatted = `(${raw.slice(0, 3)}) ${raw.slice(3)}`;
+    }
+    setFormData(prev => ({ ...prev, phone: formatted }));
+  };
+
   const handleSubmitQuote = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -140,12 +153,50 @@ export default function QuoteDrawer() {
           </div>
           <button
             onClick={() => setIsDrawerOpen(false)}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-2.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors tap-squash"
             aria-label="Close quote drawer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Miller's Law: 3-Chunk Progress Bar */}
+        {items.length > 0 && (
+          <div className="px-6 py-2.5 bg-slate-950 border-b border-slate-800/80 flex items-center justify-between text-xs">
+            <div className="flex items-center space-x-1.5">
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                step === 'review' ? 'bg-cyan-500 text-slate-950 font-black' : 'bg-slate-800 text-slate-400'
+              }`}>
+                1
+              </span>
+              <span className={step === 'review' ? 'text-white font-bold' : 'text-slate-400'}>
+                Gear & Dates
+              </span>
+            </div>
+            <span className="text-slate-600">→</span>
+            <div className="flex items-center space-x-1.5">
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                step === 'details' ? 'bg-cyan-500 text-slate-950 font-black' : 'bg-slate-800 text-slate-400'
+              }`}>
+                2
+              </span>
+              <span className={step === 'details' ? 'text-white font-bold' : 'text-slate-400'}>
+                Event Logistics
+              </span>
+            </div>
+            <span className="text-slate-600">→</span>
+            <div className="flex items-center space-x-1.5">
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                step === 'success' ? 'bg-emerald-500 text-slate-950 font-black' : 'bg-slate-800 text-slate-400'
+              }`}>
+                3
+              </span>
+              <span className={step === 'success' ? 'text-emerald-400 font-bold' : 'text-slate-400'}>
+                Verified Quote
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Drawer Body */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
@@ -353,7 +404,7 @@ export default function QuoteDrawer() {
                     required
                     name="phone"
                     value={formData.phone}
-                    onChange={handleInputChange}
+                    onChange={handlePhoneChange}
                     placeholder="(845) 555-0199"
                     className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-400"
                   />

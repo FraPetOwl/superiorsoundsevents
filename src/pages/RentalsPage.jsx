@@ -162,7 +162,32 @@ export default function RentalsPage() {
           </div>
         </div>
 
-        {/* Category Filter Pills */}
+        {/* Quick Event Presets (Hick's Law - Reduce Choice Overload) */}
+        <div className="flex items-center space-x-2 overflow-x-auto pb-1 scrollbar-none">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 shrink-0 mr-1">
+            Presets:
+          </span>
+          {[
+            { label: 'All 47 Items', cat: 'All', query: '' },
+            { label: '💍 Wedding & Reception', cat: 'All', query: 'wireless' },
+            { label: '🎧 DJ & Club Rig', cat: 'DJ Gear', query: '' },
+            { label: '🔊 Loud PA & Subs', cat: 'Audio', query: '' },
+            { label: '✨ Stage Lighting', cat: 'Lighting', query: '' }
+          ].map((preset, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                setSelectedCategory(preset.cat);
+                setSearchQuery(preset.query);
+              }}
+              className="text-xs px-3 py-1.5 rounded-lg bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700 whitespace-nowrap transition-all tap-squash"
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Category Filter Pills (Fitts's Law: 42px touch target) */}
         <div className="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none">
           {CATEGORIES.map((category) => {
             const isSelected = selectedCategory === category;
@@ -171,16 +196,16 @@ export default function RentalsPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center space-x-1.5 ${
+                className={`whitespace-nowrap px-4 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center space-x-2 tap-squash ${
                   isSelected
                     ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20 font-bold'
-                    : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
+                    : 'bg-slate-900/90 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800'
                 }`}
               >
                 <span>{category}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                    isSelected ? 'bg-slate-950/20 text-slate-950 font-bold' : 'bg-slate-800 text-slate-400'
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    isSelected ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-slate-400'
                   }`}
                 >
                   {count}

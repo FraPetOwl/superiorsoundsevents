@@ -99,21 +99,23 @@ export default function ProductDetailModal() {
               </div>
             </div>
 
-            {/* Bottom Actions */}
+            {/* Bottom Actions (Squash & Stretch) */}
             <div className="pt-4 border-t border-slate-800 flex items-center space-x-3">
-              <div className="flex items-center bg-slate-900 rounded-lg border border-slate-700 p-1">
+              <div className="flex items-center bg-slate-900 rounded-xl border border-slate-750 p-1">
                 <button
                   onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="p-1.5 text-slate-400 hover:text-white"
+                  className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white rounded-lg transition-colors tap-squash"
+                  aria-label="Decrease quantity"
                 >
                   <Minus className="w-4 h-4" />
                 </button>
-                <span className="px-3 text-sm font-bold text-white w-8 text-center">
+                <span className="px-2 text-sm font-bold text-white w-8 text-center">
                   {qty}
                 </span>
                 <button
                   onClick={() => setQty(qty + 1)}
-                  className="p-1.5 text-slate-400 hover:text-white"
+                  className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-white rounded-lg transition-colors tap-squash"
+                  aria-label="Increase quantity"
                 >
                   <Plus className="w-4 h-4" />
                 </button>
@@ -121,10 +123,10 @@ export default function ProductDetailModal() {
 
               <button
                 onClick={handleAdd}
-                className={`flex-1 py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 transition-all shadow-lg ${
+                className={`flex-1 py-3 px-4 rounded-xl font-bold text-sm flex items-center justify-center space-x-2 transition-all shadow-lg tap-squash ${
                   added
-                    ? 'bg-emerald-500 text-slate-950'
-                    : 'bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 shadow-cyan-500/25 active:scale-95'
+                    ? 'bg-emerald-500 text-slate-950 ring-2 ring-emerald-400 shadow-emerald-500/20'
+                    : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-cyan-500/20'
                 }`}
               >
                 {added ? (

@@ -12,11 +12,10 @@ export function QuoteProvider({ children }) {
     }
   });
 
-  const [startDate, setStartDate] = useState(() => {
+  const [startDate, setStartDateState] = useState(() => {
     try {
       const saved = localStorage.getItem('ss_quote_start_date');
       if (saved) return saved;
-      // Default to tomorrow
       const d = new Date();
       d.setDate(d.getDate() + 1);
       return d.toISOString().split('T')[0];
@@ -25,11 +24,10 @@ export function QuoteProvider({ children }) {
     }
   });
 
-  const [endDate, setEndDate] = useState(() => {
+  const [endDate, setEndDateState] = useState(() => {
     try {
       const saved = localStorage.getItem('ss_quote_end_date');
       if (saved) return saved;
-      // Default to 2 days from now
       const d = new Date();
       d.setDate(d.getDate() + 2);
       return d.toISOString().split('T')[0];
@@ -38,9 +36,28 @@ export function QuoteProvider({ children }) {
     }
   });
 
+  // Postel's law: forgiving and auto-sanitizing date selection
+  const setStartDate = (newStart) => {
+    setStartDateState(newStart);
+    if (newStart && endDate && new Date(newStart) >= new Date(endDate)) {
+      const nextDay = new Date(newStart);
+      nextDay.setDate(nextDay.getDate() + 1);
+      setEndDateState(nextDay.toISOString().split('T')[0]);
+    }
+  };
+
+  const setEndDate = (newEnd) => {
+    if (startDate && newEnd && new Date(newEnd) < new Date(startDate)) {
+      setEndDateState(startDate);
+    } else {
+      setEndDateState(newEnd);
+    }
+  };
+
   const [fulfillment, setFulfillment] = useState('pickup'); // 'pickup' | 'delivery'
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
+  const [bagBounced, setBagBounced] = useState(false);
 
   // Sync to localStorage
   useEffect(() => {
@@ -72,8 +89,12 @@ export function QuoteProvider({ children }) {
 
   const rentalDays = calculateDays();
 
-  // Add item
+  // Add item with secondary action trigger
   const addItem = (product, quantity = 1) => {
+    // Trigger cart bounce animation
+    setBagBounced(true);
+    setTimeout(() => setBagBounced(false), 600);
+
     setItems(prev => {
       const existing = prev.find(i => i.id === product.id);
       if (existing) {
@@ -136,7 +157,8 @@ export function QuoteProvider({ children }) {
         quickViewProduct,
         setQuickViewProduct,
         totalItemCount,
-        subtotal
+        subtotal,
+        bagBounced
       }}
     >
       {children}

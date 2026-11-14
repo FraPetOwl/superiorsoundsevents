@@ -1,19 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  MessageSquare,
   X,
   Send,
-  Sparkles,
-  Bot,
   RotateCcw,
   ShoppingBag,
   ExternalLink,
   Plus,
   Check,
-  ChevronDown,
-  Phone,
-  Info,
-  Sliders
+  Sliders,
+  Sparkles,
+  Phone
 } from 'lucide-react';
 import { useQuote } from '../context/QuoteContext';
 import { queryAssistant } from '../services/chatService';
@@ -44,7 +40,7 @@ export default function ChatDrawer() {
       {
         id: 'welcome',
         isBot: true,
-        text: "👋 Hi! I'm your Superior Sounds Gear & Event Assistant. Ask me about sound reinforcement, stage lighting, Pioneer DJ gear, wireless mics, or building a custom package for your Hudson Valley event!",
+        text: "👋 Welcome to Superior Sounds. I'm your Hudson Valley Gear & Event Specialist. Ask me about tour-grade sound systems, moving head lighting, Pioneer CDJs, wireless mics, or building a custom equipment package for your event!",
         products: [],
         timestamp: Date.now()
       }
@@ -99,12 +95,13 @@ export default function ChatDrawer() {
 
       setMessages(prev => [...prev, botMsg]);
     } catch (err) {
+      console.error(err);
       setMessages(prev => [
         ...prev,
         {
           id: 'err-' + Date.now(),
           isBot: true,
-          text: "I encountered a hiccup processing that. Please try again or feel free to call us directly at 845.790.5472!",
+          text: "I'm temporarily having trouble reaching our live catalog service. Please feel free to call our warehouse directly at (845) 790-5472 or browse our catalog tabs above!",
           products: [],
           timestamp: Date.now()
         }
@@ -112,20 +109,6 @@ export default function ChatDrawer() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleClear = () => {
-    const welcome = [
-      {
-        id: 'welcome',
-        isBot: true,
-        text: "Conversation cleared! What sound or lighting gear can I help you find today?",
-        products: [],
-        timestamp: Date.now()
-      }
-    ];
-    setMessages(welcome);
-    localStorage.removeItem('ss_chat_history');
   };
 
   const handleAddProduct = (product) => {
@@ -136,49 +119,62 @@ export default function ChatDrawer() {
     }, 2000);
   };
 
+  const handleClear = () => {
+    localStorage.removeItem('ss_chat_history');
+    setMessages([
+      {
+        id: 'welcome-' + Date.now(),
+        isBot: true,
+        text: "Conversation reset. What equipment or event details can I help you spec out today?",
+        products: [],
+        timestamp: Date.now()
+      }
+    ]);
+  };
+
   return (
     <>
-      {/* Floating Trigger Button (Bottom-Right) */}
-      <div className="fixed bottom-6 right-6 z-40">
+      {/* Floating Gear Specialist Console Button (NO FLASHING BLUE DOT) */}
+      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40">
         {!isOpen ? (
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Ask AI Assistant"
-            className="group relative flex items-center space-x-3 bg-gradient-to-r from-slate-900 via-slate-900 to-cyan-950/90 text-white pl-4 pr-5 py-3.5 rounded-full border border-cyan-500/50 shadow-2xl shadow-cyan-500/20 hover:shadow-cyan-400/40 hover:border-cyan-400 transition-all transform hover:-translate-y-0.5 active:scale-95"
+            aria-label="Open Gear & Sound Specialist"
+            className="flex items-center space-x-3 px-4 py-3 rounded-xl bg-[#0e1424] hover:bg-[#141d33] text-white border border-slate-700/80 hover:border-cyan-500/50 shadow-2xl shadow-black/60 transition-all duration-200 group tap-squash"
           >
-            <span className="relative flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-cyan-500"></span>
-            </span>
+            {/* Steady Studio Ready LED */}
+            <span className="flex items-center justify-center w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]"></span>
+
             <div className="flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-              <span className="text-sm font-display font-bold tracking-wide">
-                Ask AI Assistant
+              <Sliders className="w-4 h-4 text-cyan-400 group-hover:rotate-12 transition-transform duration-200" />
+              <span className="text-xs sm:text-sm font-display font-bold tracking-wide text-slate-100">
+                Gear Specialist
               </span>
             </div>
-            <span className="hidden sm:inline-block text-[11px] px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-semibold border border-cyan-800/60">
-              47 Items
+
+            <span className="hidden sm:inline-block text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 font-semibold border border-slate-700">
+              47 Items Online
             </span>
           </button>
         ) : null}
       </div>
 
-      {/* Floating Drawer / Chat Window */}
+      {/* Floating Console / Specialist Window */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[460px] h-[580px] max-h-[calc(100vh-2rem)] flex flex-col bg-[#070b14]/95 backdrop-blur-xl border border-cyan-500/30 rounded-2xl shadow-2xl shadow-cyan-950/80 overflow-hidden animate-fadeIn">
-          {/* Header */}
-          <div className="px-4 py-3.5 bg-gradient-to-r from-slate-950 via-slate-900 to-cyan-950 border-b border-slate-800 flex items-center justify-between">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[420px] max-w-[460px] h-[580px] max-h-[calc(100vh-2rem)] flex flex-col bg-[#090d18] backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl shadow-black/80 overflow-hidden animate-scaleUp">
+          {/* Studio Console Header */}
+          <div className="px-4 py-3 bg-[#0d1322] border-b border-slate-800 flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-cyan-400" />
+              <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center">
+                <Sliders className="w-4 h-4 text-cyan-400" />
               </div>
               <div>
-                <div className="flex items-center space-x-1.5">
-                  <span className="font-display font-bold text-sm text-white">Superior Sounds AI</span>
+                <div className="flex items-center space-x-2">
+                  <span className="font-display font-bold text-sm text-white">Audio & Gear Specialist</span>
                   <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
                 </div>
-                <p className="text-[11px] text-cyan-400/80 font-mono">
-                  Inventory & Production Assistant
+                <p className="text-[11px] text-slate-400 font-mono">
+                  Live Hudson Valley Inventory
                 </p>
               </div>
             </div>
@@ -187,14 +183,14 @@ export default function ChatDrawer() {
               <button
                 onClick={handleClear}
                 title="Reset conversation"
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 transition-colors"
+                className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors tap-squash"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                title="Close chat"
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 transition-colors"
+                title="Close console"
+                className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors tap-squash"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -202,7 +198,7 @@ export default function ChatDrawer() {
           </div>
 
           {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#070b14]/60">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-[#070a14]">
             {messages.map((msg) => {
               const isBot = msg.isBot;
               return (
@@ -211,33 +207,33 @@ export default function ChatDrawer() {
                   className={`flex flex-col ${isBot ? 'items-start' : 'items-end'}`}
                 >
                   <div
-                    className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                    className={`max-w-[88%] rounded-xl px-4 py-3 text-xs sm:text-sm leading-relaxed ${
                       isBot
-                        ? 'bg-slate-900/90 text-slate-200 border border-slate-800 shadow-md'
-                        : 'bg-gradient-to-r from-cyan-600 to-cyan-500 text-slate-950 font-medium shadow-md shadow-cyan-600/20'
+                        ? 'bg-[#111728] text-slate-200 border border-slate-800/90 shadow-sm'
+                        : 'bg-cyan-600 text-white font-medium shadow-sm'
                     }`}
                   >
                     <p className="whitespace-pre-line">{msg.text}</p>
 
                     {/* Interactive Product Embed Cards */}
                     {isBot && msg.products && msg.products.length > 0 && (
-                      <div className="mt-3.5 space-y-2 border-t border-slate-800/80 pt-3">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 flex items-center justify-between">
-                          <span>Recommended Gear</span>
-                          <span className="text-[10px] text-slate-400">Live Inventory</span>
+                      <div className="mt-3.5 space-y-2 border-t border-slate-800 pt-3">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 flex items-center justify-between">
+                          <span>Matching Inventory</span>
+                          <span className="text-[10px] text-slate-400">Available to Rent</span>
                         </div>
                         {msg.products.map((prod) => {
                           const isAdded = addedIds[prod.id];
                           return (
                             <div
                               key={prod.id}
-                              className="flex items-center justify-between p-2 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-cyan-500/40 transition-colors"
+                              className="flex items-center justify-between p-2 rounded-lg bg-[#0a0f1c] border border-slate-800 hover:border-slate-700 transition-colors"
                             >
                               <div className="flex items-center space-x-2.5 min-w-0 pr-2">
                                 <img
                                   src={prod.image}
                                   alt={prod.name}
-                                  className="w-10 h-10 object-contain rounded-lg bg-slate-900 border border-slate-800 p-1 flex-shrink-0"
+                                  className="w-10 h-10 object-contain rounded bg-slate-900 border border-slate-800 p-1 flex-shrink-0"
                                   onError={(e) => { e.target.src = '/images/djm-900nxs2.jpg'; }}
                                 />
                                 <div className="min-w-0">
@@ -254,13 +250,13 @@ export default function ChatDrawer() {
                                 <button
                                   onClick={() => setQuickViewProduct(prod)}
                                   title="View specs"
-                                  className="text-[11px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors"
+                                  className="text-[11px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors tap-squash"
                                 >
                                   Specs
                                 </button>
                                 <button
                                   onClick={() => handleAddProduct(prod)}
-                                  className={`text-[11px] px-2.5 py-1 rounded font-bold flex items-center space-x-1 transition-all ${
+                                  className={`text-[11px] px-2.5 py-1 rounded font-bold flex items-center space-x-1 transition-all tap-squash ${
                                     isAdded
                                       ? 'bg-emerald-500 text-slate-950'
                                       : 'bg-cyan-500 hover:bg-cyan-400 text-slate-950'
@@ -268,13 +264,13 @@ export default function ChatDrawer() {
                                 >
                                   {isAdded ? (
                                     <>
-                                      <Check className="w-3 h-3" />
+                                      <Check className="w-3 h-3 stroke-[3]" />
                                       <span>Added</span>
                                     </>
                                   ) : (
                                     <>
-                                      <Plus className="w-3 h-3" />
-                                      <span>Add to Quote</span>
+                                      <Plus className="w-3 h-3 stroke-[3]" />
+                                      <span>+ Add</span>
                                     </>
                                   )}
                                 </button>
@@ -290,23 +286,23 @@ export default function ChatDrawer() {
             })}
 
             {isLoading && (
-              <div className="flex items-center space-x-2 text-slate-400 text-xs py-2 px-3 bg-slate-900/60 rounded-xl w-fit border border-slate-800/60">
+              <div className="flex items-center space-x-2 text-slate-400 text-xs py-2 px-3 bg-slate-900/80 rounded-lg w-fit border border-slate-800">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                <span>Searching 47 rental items & answers...</span>
+                <span>Checking live specifications...</span>
               </div>
             )}
 
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Prompts Carousel */}
+          {/* Quick Prompts Carousel (Hick's Law - fast curated options) */}
           {messages.length <= 3 && (
-            <div className="px-3 py-2 bg-slate-950/70 border-t border-slate-900 overflow-x-auto flex space-x-2 no-scrollbar">
+            <div className="px-3 py-2 bg-[#0a0e1a] border-t border-slate-800/80 overflow-x-auto flex space-x-2 scrollbar-none">
               {SUGGESTED_PROMPTS.map((prompt, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSend(prompt)}
-                  className="whitespace-nowrap text-[11px] px-2.5 py-1 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-cyan-300 border border-slate-800 hover:border-cyan-500/40 transition-colors flex-shrink-0"
+                  className="whitespace-nowrap text-[11px] px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition-colors flex-shrink-0 tap-squash"
                 >
                   {prompt}
                 </button>
@@ -316,8 +312,8 @@ export default function ChatDrawer() {
 
           {/* Active Quote Bag Banner */}
           {items.length > 0 && (
-            <div className="px-3 py-2 bg-cyan-950/40 border-t border-cyan-900/40 flex items-center justify-between text-xs">
-              <div className="flex items-center space-x-1.5 text-cyan-300 font-medium">
+            <div className="px-3 py-2 bg-slate-900/90 border-t border-slate-800 flex items-center justify-between text-xs">
+              <div className="flex items-center space-x-1.5 text-slate-300 font-medium">
                 <ShoppingBag className="w-3.5 h-3.5 text-cyan-400" />
                 <span>{items.length} item{items.length > 1 ? 's' : ''} in Quote Bag</span>
               </div>
@@ -326,16 +322,16 @@ export default function ChatDrawer() {
                   setIsOpen(false);
                   setIsDrawerOpen(true);
                 }}
-                className="text-cyan-400 hover:text-cyan-300 font-bold underline flex items-center space-x-1"
+                className="text-cyan-400 hover:text-cyan-300 font-bold flex items-center space-x-1 tap-squash"
               >
-                <span>Review Quote</span>
+                <span>Review Estimate</span>
                 <ExternalLink className="w-3 h-3" />
               </button>
             </div>
           )}
 
-          {/* Input Bar */}
-          <div className="p-3 bg-slate-950 border-t border-slate-800 flex items-center space-x-2">
+          {/* Input Bar (Fitts's Law: comfortable touch inputs) */}
+          <div className="p-3 bg-[#0d1322] border-t border-slate-800 flex items-center space-x-2">
             <input
               type="text"
               value={input}
@@ -344,14 +340,14 @@ export default function ChatDrawer() {
                 if (e.key === 'Enter') handleSend();
               }}
               placeholder="Ask about speakers, lighting, DJ gear..."
-              className="flex-1 bg-slate-900 text-white placeholder-slate-500 text-sm px-3.5 py-2.5 rounded-xl border border-slate-700/80 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+              className="flex-1 bg-slate-900 text-white placeholder-slate-500 text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-700/80 focus:outline-none focus:border-cyan-500 transition-colors"
             />
             <button
               onClick={() => handleSend()}
               disabled={!input.trim() || isLoading}
-              className="p-2.5 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 disabled:opacity-40 disabled:hover:from-cyan-500 text-slate-950 rounded-xl font-bold transition-all transform active:scale-95"
+              className="p-2.5 bg-cyan-500 hover:bg-cyan-400 disabled:opacity-40 text-slate-950 rounded-xl font-bold transition-all tap-squash"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 stroke-[2.5]" />
             </button>
           </div>
         </div>

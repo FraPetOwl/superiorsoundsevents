@@ -30,10 +30,10 @@ export default function HomePage({ setActivePage }) {
 
         {/* Hero Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 text-cyan-400 text-xs font-semibold mb-8 shadow-lg shadow-cyan-950/50 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
-            <span>Serving Hudson Valley & Surrounding Areas for 20+ Years</span>
+          {/* Studio Tour Badge (NO PING) */}
+          <div className="inline-flex items-center space-x-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-slate-700/80 text-slate-200 text-xs font-semibold mb-8 shadow-lg shadow-black/50 backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+            <span className="text-slate-300">Hudson Valley Pro Audio & Production • 20+ Years Touring Experience</span>
           </div>
 
           {/* Main Headline */}
@@ -50,11 +50,11 @@ export default function HomePage({ setActivePage }) {
             From intimate acoustic performances and luxury barn weddings to 1,000-person college block parties. We deliver tour-grade sound reinforcement, intelligent lighting, full-service DJing, and rider-ready gear rentals.
           </p>
 
-          {/* Hero CTAs */}
+          {/* Hero CTAs (Squash & Stretch) */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto sm:max-w-none">
             <button
               onClick={() => setActivePage('rentals')}
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 hover:from-cyan-400 hover:to-cyan-300 text-slate-950 font-display font-black text-base shadow-xl shadow-cyan-500/25 hover:shadow-cyan-400/40 transition-all transform active:scale-95 flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-display font-black text-base shadow-xl shadow-cyan-500/20 hover:shadow-cyan-400/30 transition-all flex items-center justify-center space-x-2 tap-squash"
             >
               <span>Explore Rental Gear (47 Items)</span>
               <ArrowRight className="w-5 h-5 stroke-[2.5]" />
@@ -62,7 +62,7 @@ export default function HomePage({ setActivePage }) {
 
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white font-display font-bold text-base border border-slate-700/80 hover:border-cyan-500/40 transition-all flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white font-display font-bold text-base border border-slate-700/80 hover:border-slate-600 transition-all flex items-center justify-center space-x-2 tap-squash"
             >
               <span>Build Custom Event Quote</span>
             </button>
